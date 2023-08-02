@@ -8,6 +8,7 @@ export default function StartButton(props) {
 
     const [inProp, setInProp] = useState(true);
     const shade = document.getElementById('shade')
+    const overlayContainer = document.getElementById('overlayContainer')
 
     const handleClick = () => {
         setInProp(false);
@@ -15,6 +16,7 @@ export default function StartButton(props) {
 
     const onExited = () => {
         shade.style.backgroundColor = 'transparent'
+        overlayContainer.classList.add('no-pointer-events')
         props.setIsGameStarted(true)
     }
 

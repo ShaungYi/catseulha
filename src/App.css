@@ -20,6 +20,9 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
 
+}
+
+.no-pointer-events {
   pointer-events: none;
 }
 

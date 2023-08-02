@@ -1,0 +1,19 @@
+.fade-element-enter{
+    opacity: 0;
+}
+
+
+.fade-element-enter-active{
+    opacity: 1;
+    transition: 0.2s ease-in-out;
+}
+
+.fade-element-exit{
+    opacity: 1;
+}
+
+
+.fade-element-exit-active{
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+}

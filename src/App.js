@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import './App.css';
 import StartButton from './components/StartButton';
 import HappyCatGif from './components/HappyCatGif';
-import WordBubble from './components/WordBubble';
 
 
 function App() {

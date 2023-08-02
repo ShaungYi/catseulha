@@ -1,0 +1,20 @@
+.start-button {
+    border-radius: 0.4em;
+    padding: 10px 20px;
+    font-size: 3rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out;
+
+    z-index: 100;
+    position: relative;
+
+    animation: resting-pulse 3s ease-in-out infinite;
+}
+
+
+.start-button-exit {
+    animation: triggered-pulse 1.2s ease-out;
+}

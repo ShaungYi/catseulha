@@ -1,0 +1,19 @@
+.happy-cat-gif{
+    height: 40vh;
+    position: relative;
+    transform: translateX(calc(-50vw - 50%));
+}
+
+.happy-cat-gif-enter{
+    transform: translateX(calc(-50vw - 50%));
+}
+
+.happy-cat-gif-enter-active{
+    transform: translateX(0);
+    transition: 4s;
+}
+
+.happy-cat-gif-enter-done{
+    transform: translateX(0);
+}
+

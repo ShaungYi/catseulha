@@ -6,14 +6,12 @@ import HappyCatGif from './components/HappyCatGif';
 
 function App() {
 
-  const [isGameStarted, setIsGameStarted] = useState(false)
-
   return (
 
     <div className="App">
 
-      <HappyCatGif isGameStarted={isGameStarted}></HappyCatGif>
-      <StartButton setIsGameStarted={setIsGameStarted}></StartButton>
+      <HappyCatGif></HappyCatGif>
+      <StartButton></StartButton>
     </div>
   );
 }

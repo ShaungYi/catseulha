@@ -3,25 +3,20 @@ import './nextButton.css'
 import { contentSliceActions } from '../../redux/store'
 
 
-export default function NextButton(){
+export default function NextButton() {
 
-    const isLastContent = useSelector(state => state.content.index === state.content.contents.length - 1)
 
     const dispatch = useDispatch()
 
     const onclick = () => {
-        
-
-        isLastContent ? window.location.reload():
         dispatch(contentSliceActions.incrementIndex())
-        setTimeout(() => {
-            dispatch(contentSliceActions.setNextContent())
-        }, 200);
+        setTimeout(() => { dispatch(contentSliceActions.setIsShowImages(false)) }, 200)
+
     }
 
     return (
         <button className='next-button' onClick={onclick}>
-            {isLastContent ? "Restart" : "Next"}
+            Next
         </button>
     )
 }

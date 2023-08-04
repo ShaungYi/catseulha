@@ -26,7 +26,8 @@ export default function FadeAnimation(props) {
             timeout={200}
             classNames="fade-element"
             unmountOnExit
-            onExited={onExited}>
+            onExited={onExited}
+            onExiting={props.onExiting}>
 
             {props.children}
 

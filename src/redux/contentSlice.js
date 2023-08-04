@@ -1,40 +1,19 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 
-
-export let contents = [
-  [
-    500,
-    `안넝하때여?`,
-    2000,
-    `안넝하때여?
-    Happy Happy Happy`,
-    500,
-    `안넝하때여?
-    Happy Happy Happy.`,
-    500,
-    `안넝하때여?
-    Happy Happy Happy..`,
-    500,
-    `안넝하때여?
-    Happy Happy Happy...`,
-    500,
-    `안넝하때여?
-    Happy Happy Happy....`,
-    `안넝하때여?
-    Happy Happy Happy....
-    Happy Cat 이에오`
-  ],
-  [
-    500,
-    '오느른 스라에 대해서 에기하꺼에오']
-]
-
+const contents = []
 
 const initialState = {
   contents,
-  currentContent: contents[0],
-  index: 0
+  imageSequence: [],
+  index: 0,
+  stageEnterTimeMilis: 1000,
+  isGameStarted: false,
+  isReload: false,
+  isStartButtonPresent: true,
+  showWordBubble: false,
+  isShowImages: false,
+  isShowNextButton: false
 };
 
 const contentSlice = createSlice({
@@ -42,13 +21,37 @@ const contentSlice = createSlice({
   initialState,
   reducers: {
     incrementIndex(state) {
-      state.index < state.contents.length - 1 ?
-        state.index++ :
-        state.index = 0
+
+        state.index++ 
+
     },
-    setNextContent(state) {
-      state.currentContent = state.contents[state.index]
+    setIndex(state, action) {
+      state.index = action.payload
     },
+    setContents(state, action){
+      state.contents = action.payload
+    },
+    setImageSequence(state, action){
+      state.imageSequence = [...action.payload]
+    },
+    setIsGameStarted(state, action){
+      state.isGameStarted = action.payload
+    },
+    setReloadStatus(state, action){
+      state.isReload = action.payload
+    },
+    setIsStartButtonPresent(state, action){
+      state.isStartButtonPresent = action.payload
+    },
+    setShowWordBubble(state, action){
+      state.showWordBubble = action.payload
+    },
+    setIsShowImages(state, action){
+      state.isShowImages = action.payload
+    },
+    setIsShowNextButton(state, action){
+      state.isShowNextButton = action.payload
+    }
   }
 })
 

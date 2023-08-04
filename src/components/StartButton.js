@@ -1,30 +1,33 @@
 import './startButton.css'
 import { useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import { contentSliceActions } from '../redux/store';
 
 
 export default function StartButton(props) {
 
-    const [inProp, setInProp] = useState(true);
+    const isStartButtonPresent = useSelector((state) => state.content.isStartButtonPresent)
     const shade = document.getElementById('shade')
     const overlayContainer = document.getElementById('overlayContainer')
+    const dispatch = useDispatch()
 
     const handleClick = () => {
-        setInProp(false);
+        dispatch(contentSliceActions.setIsStartButtonPresent(!isStartButtonPresent))
     };
 
     const onExited = () => {
-        shade.style.backgroundColor = 'transparent'
+        shade.classList.remove('active-shade')
         overlayContainer.classList.add('no-pointer-events')
-        props.setIsGameStarted(true)
+        dispatch(contentSliceActions.setIsGameStarted(true))
     }
 
     return (
         <>
             {ReactDOM.createPortal(
                 <CSSTransition
-                    in={inProp}
+                    in={isStartButtonPresent}
                     timeout={1200}
                     classNames="start-button"
                     unmountOnExit
@@ -34,8 +37,8 @@ export default function StartButton(props) {
                             className='start-button'
                             onClick={handleClick}
                         >
-                            {state == 'entered' && 'Start'}
-                            {state == 'exiting' && 'Starting...'}
+                            {(state === 'entered' || state === 'entering')  && 'Start'}
+                            {state === 'exiting' && 'Starting...'}
                         </button>
                     }
                 </CSSTransition>

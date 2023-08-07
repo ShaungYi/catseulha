@@ -3,7 +3,7 @@ import './imageViewer.css'
 import { useEffect, useRef, useState } from 'react'
 import TimeOutPromise from '../../TimeOutPromise'
 
-export default function ImageViewer(props){
+export default function ImageViewer(props) {
 
     const imageSequence = useSelector((state) => state.content.imageSequence, shallowEqual)
     const img = useRef()
@@ -11,11 +11,11 @@ export default function ImageViewer(props){
     const [imgSrc, setImgSrc] = useState()
 
 
-    async function recursiveImageShow(index){
+    async function recursiveImageShow(index) {
         setImgSrc(imageSequence[index])
-        if (index + 1 < imageSequence.length){
-            await TimeOutPromise(imageSequence[index+1], () => {
-                if (index + 2 < imageSequence.length){
+        if (index + 1 < imageSequence.length) {
+            await TimeOutPromise(imageSequence[index + 1], () => {
+                if (index + 2 < imageSequence.length) {
                     recursiveImageShow(index + 2)
                 }
             })
@@ -23,25 +23,42 @@ export default function ImageViewer(props){
 
     }
 
-    useEffect(() => {recursiveImageShow(0)}, [imageSequence])
+    useEffect(() => { recursiveImageShow(0) }, [imageSequence])
 
 
     useEffect(() => {
 
-        console.log('fitting height')
-        const bubbleContentHeight = document.getElementById('word-bubble').getBoundingClientRect().height
-        const halfViewHeight = window.innerHeight / 2
+        try{
+            
+            console.log('fitting height')
+            const bubbleContentHeight = document.getElementById('word-bubble').getBoundingClientRect().height
+            const halfViewHeight = window.innerHeight / 2
+    
+            console.log('bubbleContentHeight: ', bubbleContentHeight)
+            console.log('halfViewHeight: ', halfViewHeight)
+            if (bubbleContentHeight < halfViewHeight) {
+                img.current.style.height = `${halfViewHeight - bubbleContentHeight}px`
+            }
 
-        console.log('bubbleContentHeight: ',bubbleContentHeight)
-        console.log('halfViewHeight: ',halfViewHeight)
-        if (bubbleContentHeight < halfViewHeight){
-            img.current.style.height = `${halfViewHeight - bubbleContentHeight}px`
+            if (imgSrc === '/miscellaneous-images/스라좋아하는거/댄스.jpeg'){
+                img.current.style.height = `${halfViewHeight - 31.5}px`
+            }
+        } catch (e) {
+            console.log(e)
         }
+
+
 
 
     }, [imgSrc])
 
-    return(
-        <img src={imgSrc} className='theImg' id='theImg' ref={img}></img>
+    return (
+        <>
+            {imgSrc !== 'nothing' &&
+                <img src={imgSrc} className='theImg' id='theImg' ref={img}></img>
+
+            }
+        </>
+
     )
 }

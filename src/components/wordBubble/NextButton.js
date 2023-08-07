@@ -8,9 +8,18 @@ export default function NextButton() {
 
     const dispatch = useDispatch()
 
+    const resetBubbleWidth = () => {
+        const bubble = document.getElementById('word-bubble')
+        bubble.style.width = 'auto'
+    }
+
     const onclick = () => {
         dispatch(contentSliceActions.incrementIndex())
-        setTimeout(() => { dispatch(contentSliceActions.setIsShowImages(false)) }, 200)
+        setTimeout(() => { 
+            dispatch(contentSliceActions.setIsShowImages(false)) 
+            resetBubbleWidth()
+        }, 200)
+
 
     }
 

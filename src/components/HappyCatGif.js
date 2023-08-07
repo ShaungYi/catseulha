@@ -32,10 +32,7 @@ export default function HappyCatGif(props) {
             <div className='gif-container'>
                 <WordBubble show={showWordBubble}></WordBubble>
 
-
                 <img src='other-cats/happyCatGif1.gif' className='happy-cat-gif'></img>
-
-
 
             </div>
         </CSSTransition>

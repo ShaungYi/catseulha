@@ -7,7 +7,7 @@ const initialState = {
   contents,
   imageSequence: [],
   index: 0,
-  stageEnterTimeMilis: 1000,
+  stageEnterTimeMilis: 4000,
   isGameStarted: false,
   isReload: false,
   isStartButtonPresent: true,

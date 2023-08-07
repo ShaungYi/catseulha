@@ -7,6 +7,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { contentSliceActions } from '../../redux/store';
 import TimeOutPromise from '../../TimeOutPromise';
 import ImageViewer from './ImageViewer';
+import ImagePreloader from '../ImagePreloader';
 
 let bubbleWidth
 const typingSpeed = 50
@@ -211,47 +212,47 @@ export default function WordBubble(props) {
                 ],
             imageSequence:
                 [
-                    '/우리고양이/꼬메로.jpg',
+                    '/our-cats/comero.jpg',
                     1500,
-                    '/우리고양이/얼룩.jpg',
+                    '/our-cats/uluk.jpg',
                     1500,
-                    '/우리고양이/우마르팍.jpg',
+                    '/our-cats/ummarpak.jpg',
                     1500,
-                    '/우리고양이/치주.jpg',
+                    '/our-cats/chizu.jpg',
                     1500,
-                    '/우리고양이/다욱이.jpg',
+                    '/our-cats/dawuk.jpg',
                     1500,
-                    '/우리고양이/리베르.jpg',
+                    '/our-cats/liber.jpg',
                     1500,
-                    '/우리고양이/리브로.jpg',
+                    '/our-cats/libro.jpg',
                     1500,
-                    '/우리고양이/바디.jpg',
+                    '/our-cats/verde.jpg',
                     1500,
-                    '/우리고양이/블랑카.jpg',
+                    '/our-cats/blanca.jpg',
                     1500,
                     '/other-cats/exhausted_cat.jpeg',
                     3000,
-                    '/우리고양이/빼꾸.jpg',
+                    '/our-cats/peqo.jpg',
                     1500,
-                    '/우리고양이/샤론.jpg',
+                    '/our-cats/sharon.jpg',
                     1500,
-                    '/우리고양이/솜이.jpg',
+                    '/our-cats/somi.jpg',
                     1500,
-                    '/우리고양이/점박.JPG',
+                    '/our-cats/jumbak.jpg',
                     1500,
                     '/other-cats/cat-driving-serious.gif',
                     3000,
-                    '/우리고양이/젓소.JPG',
+                    '/our-cats/jutso.jpg',
                     1500,
-                    '/우리고양이/쭈브리.jpg',
+                    '/our-cats/soboro.jpg',
                     1500,
-                    '/우리고양이/코튼.jpg',
+                    '/our-cats/cotton.jpg',
                     1500,
                     'nothing',
                     2500,
                     '/miscellaneous-images/drumroll.gif',
                     4000,
-                    '/우리고양이/봉주이.jpg'
+                    '/our-cats/caramel.jpg'
 
                 ]
 
@@ -260,7 +261,7 @@ export default function WordBubble(props) {
             textSequence:
                 [
                     500,
-                    '게다가 스라느 고양이 그림도 자 그리답니다',
+                    '게다가 스라느 고양이 그림도 잘 그리답니다',
                     200,
                     showImages,
                     200,
@@ -416,7 +417,7 @@ export default function WordBubble(props) {
                 saveBubbleWidth
             ],
             imageSequence: [
-                '/catSeulha-images/seulha-selfies/셀피셀피.jpg'
+                '/catSeulha-images/seulha-selfies/selfie_selfie.jpg'
             ]
         },
         {
@@ -549,7 +550,7 @@ export default function WordBubble(props) {
                 saveBubbleWidth
             ],
             imageSequence: [
-                '/catSeulha-images/최고의사진가.png'
+                '/catSeulha-images/best_photographer.png'
             ]
         },
         {
@@ -601,27 +602,27 @@ export default function WordBubble(props) {
                 ],
             imageSequence:
                 [
-                    '/miscellaneous-images/스라좋아하는거/자수.JPG',
+                    '/miscellaneous-images/seulhas-favorites/sewing.JPG',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/cafe.jpeg',
+                    '/miscellaneous-images/seulhas-favorites/cafe.jpeg',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/달달이.png',
+                    '/miscellaneous-images/seulhas-favorites/sweets.png',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/달달이_만들기.jpeg',
+                    '/miscellaneous-images/seulhas-favorites/making_sweets.jpeg',
                     3000,
-                    '/miscellaneous-images/스라좋아하는거/부드러운_앉을것.webp',
+                    '/miscellaneous-images/seulhas-favorites/soft_chair.webp',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/부드러운_누울것.jpeg',
+                    '/miscellaneous-images/seulhas-favorites/soft_bed.jpeg',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/ipad.jpg',
+                    '/miscellaneous-images/seulhas-favorites/ipad.jpg',
                     2000,
                     'nothing',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/ballet.jpeg',
+                    '/miscellaneous-images/seulhas-favorites/ballet.jpeg',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/ballet-banned.jpeg',
+                    '/miscellaneous-images/seulhas-favorites/ballet-banned.jpeg',
                     2000,
-                    '/miscellaneous-images/스라좋아하는거/댄스.jpeg'
+                    '/miscellaneous-images/seulhas-favorites/dance.jpeg'
 
                 ]
         },
@@ -896,6 +897,23 @@ export default function WordBubble(props) {
     }
 
 
+    function getListOfImgSrcs(){
+        let allSrcs = []
+        for (let paire of contents){
+            const imgSequence = paire.imageSequence
+            if (imgSequence){
+                const srcs = imgSequence.filter((src => !(typeof src === 'number')))
+                allSrcs = [...allSrcs, ...srcs]
+            }
+        }
+
+        return allSrcs
+    }
+
+    const isLoadImages = useRef(true)
+    useEffect(() => {isLoadImages.current = false}, [])
+
+
 
     const range = []
     for (let i = 0; i < contentNum; i++) {
@@ -903,34 +921,35 @@ export default function WordBubble(props) {
     }
 
     return (
+        <>
+            {isLoadImages.current && <ImagePreloader images={getListOfImgSrcs()}></ImagePreloader>}
+            {props.show &&
+                <FadeAnimation trigger={contentIndex} onExited={hideNextButton} onExiting={keepWidthWhileFading}>
+                    <div id="word-bubble">
+                        <div id='bubbleContent' className='bubble-content'>
+                            {isGameStarted && range.map((i) => {
+                                const sequence = [...contents[i].textSequence]
+                                return i === contentIndex && <TypeAnimation
+                                    sequence={sequence}
+                                    wrapper="span"
+                                    speed={typingSpeed}
+                                    omitDeletionAnimation
+                                    style={{ fontSize: '1.7em', display: 'inline-block', whiteSpace: 'pre-line' }}
+                                />
+                            })}
 
-        props.show &&
-        <FadeAnimation trigger={contentIndex} onExited={hideNextButton} onExiting={keepWidthWhileFading}>
-            <div id="word-bubble">
-                <div id='bubbleContent' className='bubble-content'>
-                    {isGameStarted && range.map((i) => {
-                        const sequence = [...contents[i].textSequence]
-                        return i === contentIndex && <TypeAnimation
-                            sequence={sequence}
-                            wrapper="span"
-                            speed={typingSpeed}
-                            omitDeletionAnimation
-                            style={{ fontSize: '1.7em', display: 'inline-block', whiteSpace: 'pre-line' }}
-                        />
-                    })}
+                            {isShowImages && <ImageViewer></ImageViewer>}
+                            {isShowNextButton &&
+                                <FadeAnimation trigger={isShowNextButton}>
+                                    <NextButton></NextButton>
+                                </FadeAnimation>}
 
-                    {isShowImages && <ImageViewer></ImageViewer>}
-                    {isShowNextButton &&
-                        <FadeAnimation trigger={isShowNextButton}>
-                            <NextButton></NextButton>
-                        </FadeAnimation>}
-
-                    <div className="arrow"></div>
-                </div>
-            </div>
-        </FadeAnimation>
-
-
+                            <div className="arrow"></div>
+                        </div>
+                    </div>
+                </FadeAnimation>
+            }
+        </>
     );
 };
 

@@ -859,9 +859,9 @@ export default function WordBubble(props) {
                 ],
             imageSequence:
                 [
-                    'other-cats/happyCatGif1.gif',
+                    '/other-cats/happyCatGif1.gif',
                     2000,
-                    'other-cats/goodbyeCat.gif'
+                    '/other-cats/goodbyeCat.gif'
                 ]
         }
 

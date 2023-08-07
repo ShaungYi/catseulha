@@ -40,9 +40,14 @@ export default function ImageViewer(props) {
                 img.current.style.height = `${halfViewHeight - bubbleContentHeight}px`
             }
 
-            if (imgSrc === '/miscellaneous-images/스라좋아하는거/댄스.jpeg'){
+            if (
+                imgSrc === '/miscellaneous-images/스라좋아하는거/댄스.jpeg' ||
+                imgSrc === '/miscellaneous-images/happy-birthday-cats.gif' ||
+                imgSrc === '/other-cats/goodbyeCat.gif'
+                ){
                 img.current.style.height = `${halfViewHeight - 31.5}px`
             }
+
         } catch (e) {
             console.log(e)
         }

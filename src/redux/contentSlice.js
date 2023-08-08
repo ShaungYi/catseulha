@@ -7,13 +7,14 @@ const initialState = {
   contents,
   imageSequence: [],
   index: 0,
-  stageEnterTimeMilis: 4000,
+  stageEnterTimeMilis: 1000,
   isGameStarted: false,
   isReload: false,
   isStartButtonPresent: true,
   showWordBubble: false,
   isShowImages: false,
-  isShowNextButton: false
+  isShowNextButton: false,
+  triggerNextImage: {},
 };
 
 const contentSlice = createSlice({
@@ -51,7 +52,10 @@ const contentSlice = createSlice({
     },
     setIsShowNextButton(state, action){
       state.isShowNextButton = action.payload
-    }
+    },
+    triggerNextImage(state){
+      state.triggerNextImage = {}
+    },
   }
 })
 

@@ -1,7 +1,9 @@
-import { shallowEqual, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import './imageViewer.css'
 import { useEffect, useRef, useState } from 'react'
 import TimeOutPromise from '../../TimeOutPromise'
+import { contentSliceActions } from '../../redux/store'
+
 
 export default function ImageViewer(props) {
 
@@ -9,21 +11,42 @@ export default function ImageViewer(props) {
     const img = useRef()
 
     const [imgSrc, setImgSrc] = useState()
+    const imgIndex = useRef(0)
+    const trigger = useSelector((state) => state.content.triggerNextImage)
 
 
-    async function recursiveImageShow(index) {
-        setImgSrc(imageSequence[index])
-        if (index + 1 < imageSequence.length) {
-            await TimeOutPromise(imageSequence[index + 1], () => {
-                if (index + 2 < imageSequence.length) {
-                    recursiveImageShow(index + 2)
-                }
-            })
+
+
+    // async function recursiveImageShow(index) {
+    //     setImgSrc(imageSequence[index])
+    //     if (index + 1 < imageSequence.length) {
+    //         await TimeOutPromise(imageSequence[index + 1], () => {
+    //             if (index + 2 < imageSequence.length) {
+    //                 recursiveImageShow(index + 2)
+    //             }
+    //         })
+    //     }
+
+    // }
+
+    const nextImage = () => {
+        console.log('nextImage')
+        if (imgIndex.current < imageSequence.length){
+            imgIndex.current++
+            setImgSrc(imageSequence[imgIndex.current])
         }
-
     }
 
-    useEffect(() => { recursiveImageShow(0) }, [imageSequence])
+    useEffect(() => {
+        nextImage()
+    }, [trigger])
+
+
+
+    useEffect(() => { 
+        imgIndex.current = 0
+        setImgSrc(imageSequence[imgIndex.current])
+     }, [imageSequence])
 
 
     useEffect(() => {
@@ -51,9 +74,6 @@ export default function ImageViewer(props) {
         } catch (e) {
             console.log(e)
         }
-
-
-
 
     }, [imgSrc])
 
